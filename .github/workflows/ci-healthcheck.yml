@@ -54,6 +54,7 @@ jobs:
           context: ./Backend
           file: ./Backend/Dockerfile
           push: false
+          load: true
 
       - name: Test Build UI Dockerfile
         uses: docker/build-push-action@v5
@@ -61,3 +62,4 @@ jobs:
           context: ./UI
           file: ./UI/Dockerfile
           push: false
+          load: true
