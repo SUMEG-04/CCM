@@ -32,7 +32,7 @@ jobs:
 
       # --- 2. UI Heath Check and Build Test ---
       - name: Set up Node.js (for UI)
-        uses: action/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
