@@ -45,7 +45,7 @@ jobs:
           LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" | sort -V | tail -n 1)
 
           if [ -z "$LATEST_TAG" ]; then
-            LATEST_TAG="v0.0.0"
+            NEW_VERSION="v0.0.0"
           else
             CLEAN_VERSION="${LATEST_TAG#v}"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$CLEAN_VERSION"
