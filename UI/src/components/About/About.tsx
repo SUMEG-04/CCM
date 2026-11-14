@@ -1,5 +1,3 @@
-import Button from "../../common/Button/Button"
-import CommonInput from "../../common/Input/CommonInput"
 import Login from "../Login/Login"
 import Register from "../Register/Register"
 
