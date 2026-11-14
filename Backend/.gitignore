@@ -1,0 +1,9 @@
+/target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log

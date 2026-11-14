@@ -1,0 +1,20 @@
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.85rem 1.5rem;
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+.app-footer-copy {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.app-footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}

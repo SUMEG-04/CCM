@@ -1,0 +1,62 @@
+/* Outer container holding everything */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Side-by-side layout with a fixed label column */
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Vertically centers the label with the input */
+  gap: 1rem; /* Space between label column and input column */
+  width: 100%;
+}
+
+/* Fixed width for labels so all input boxes line up perfectly */
+.label-section {
+  display: flex;
+  align-items: center;
+  min-width: 130px; /* 👈 Adjust this width if your longest label needs more room */
+  max-width: 130px;
+  flex-shrink: 0;
+}
+
+.input-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+/* Input section takes up the remaining space */
+.input-section {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* Base input styles - fills 100% of its section column */
+.input {
+  width: 100% !important;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Focus and hover states */
+.input:hover {
+  border-color: #9ca3af;
+}
+
+.input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}

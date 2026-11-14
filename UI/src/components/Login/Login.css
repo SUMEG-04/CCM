@@ -1,0 +1,41 @@
+/* Main wrapper for the login screen layout */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.5rem; /* Spacing between header, body, and footer */
+}
+
+/* Header section containing the title */
+.login-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.75rem;
+}
+
+.login-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+/* Body section containing inputs */
+.login-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between input fields */
+  width: 100%;
+}
+
+/* Footer section containing the submit button */
+.login-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Makes button span nicely across width if needed */
+  margin-top: 0.5rem;
+}

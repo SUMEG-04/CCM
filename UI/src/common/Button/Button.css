@@ -1,0 +1,44 @@
+.btn-container {
+  display: flex;
+  width: 100%; /* 👈 Make container span full width */
+}
+
+.btn-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%; /* 👈 Make wrapper span full width */
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* 👈 Make content span full width */
+}
+
+/* Main Button Styles */
+.btn {
+  width: 100%; /* 👈 Default button width to 100% so it fills the form */
+  height: 2.5rem;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+/* Hover and Active Micro-interactions */
+.btn:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}

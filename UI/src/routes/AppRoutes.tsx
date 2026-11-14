@@ -1,0 +1,17 @@
+import { Route, Routes } from "react-router-dom"
+import About from "../components/About/About";
+import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
+
+
+const AppRoute = () => {
+    return (
+        <Routes>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/" element={<Register/>}/>
+        </Routes>
+    );
+}
+
+export default AppRoute
