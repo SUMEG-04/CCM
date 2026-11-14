@@ -1,0 +1,63 @@
+name: CI integration and Healthcheck
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --- 1. Backend Build and Healthcheck ---
+      - name: Set up JDK (for Spring Boot Backend)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build backed with Maven
+        run: |
+          cd Backend
+          # Run a clean compile and test package check without deploying
+          mvn clean test-compile
+
+      # --- 2. UI Heath Check and Build Test ---
+      - name: Set up Node.js (for UI)
+        uses: action/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './UI/package-lock.json'
+
+      - name: Install UI Dependencies
+        run: |
+          cd UI
+          npm ci
+          npm run build
+
+      # --- 3. Docker Validation & Dry-run build ---
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Build Backend Dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Backend
+          file: ./Backend/Dockerfile
+          push: false
+
+      - name: Test Build UI Dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: ./UI
+          file: ./UI/Dockerfile
+          push: false
