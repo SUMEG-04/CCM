@@ -1,16 +1,15 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { store } from "../store/store";
+import type { ComponentType } from 'react'
+import CCMStoreProvider from './CCMStoreProvider'
 
 export const withCCMStore = <P extends object>(
-  Component: React.ComponentType<P>
-): React.FC<P> => {
-  const WrappedComponent: React.FC<P> = (props) => (
-    <Provider store={store}>
+  Component: ComponentType<P>
+): ComponentType<P> => {
+  const WrappedComponent = (props: P) => (
+    <CCMStoreProvider>
       <Component {...props} />
-    </Provider>
-  );
-  WrappedComponent.displayName = `WithCCMStore(${Component.displayName || Component.name || 'Component'})`;
-  return WrappedComponent;
-};
+    </CCMStoreProvider>
+  )
 
+  WrappedComponent.displayName = `WithCCMStore(${Component.displayName || Component.name || 'Component'})`
+  return WrappedComponent
+}

@@ -18,6 +18,8 @@ export default createModuleFederationConfig({
         'react': { singleton: true },
         'react-dom': { singleton: true },
         'react-router-dom': { singleton: true },
+        'react-redux': { singleton: true },
+        '@reduxjs/toolkit': { singleton: true },
     },
     dts: false,
 });
