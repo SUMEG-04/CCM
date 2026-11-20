@@ -24,6 +24,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -40,34 +43,39 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git fetch --tags || true
+          git fetch --tags --force || true
 
-          LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" | sort -V | tail -n 1)
+          # Only valid semver tags: v1.2.3 (ignore bad tags like vv0.0.0)
+          LATEST_TAG=$(git tag -l 'v*.*.*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1 || true)
 
           if [ -z "$LATEST_TAG" ]; then
-            NEW_VERSION="v0.0.0"
+            MAJOR=0
+            MINOR=0
+            PATCH=0
           else
             CLEAN_VERSION="${LATEST_TAG#v}"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$CLEAN_VERSION"
-
-            BUMP_TYPE="${{ github.event.inputs.release_type }}"
-
-            if [ "$BUMP_TYPE" = "major" ]; then
-              MAJOR=$((MAJOR + 1))
-              MINOR=0
-              PATCH=0
-            elif [ "$BUMP_TYPE" = "minor" ]; then
-              MINOR=$((MINOR + 1))
-              PATCH=0
-            else
-              PATCH=$((PATCH + 1))
-            fi
-
-            NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
           fi
 
+          BUMP_TYPE="${{ github.event.inputs.release_type }}"
+
+          if [ "$BUMP_TYPE" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP_TYPE" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+
+          # Keep NEW_VERSION with the v prefix; do not add another v later
+          NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+
+          echo "Latest tag: ${LATEST_TAG:-<none>}"
           echo "Target version for this release: $NEW_VERSION"
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v5
@@ -91,8 +99,13 @@ jobs:
 
       - name: Create and Push Git Tag to Main
         run: |
-          TAG_NAME="v${{ env.NEW_VERSION }}"
+          TAG_NAME="${{ env.NEW_VERSION }}"
+
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Tag $TAG_NAME already exists"
+            exit 1
+          fi
 
           echo "Tagging main branch with: $TAG_NAME"
-          git tag -a "$TAG_NAME" -m "Release ${{ env.NEW_VERSION }}"
+          git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
           git push origin "$TAG_NAME"
