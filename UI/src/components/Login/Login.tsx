@@ -41,9 +41,10 @@ const LoginComponent = () => {
             }).unwrap();
 
             setSuccessMessage(response.message || "Login successful!");
+            window.dispatchEvent(new Event("ccm_auth_change"));
             setTimeout(() => {
                 navigate("/");
-            }, 800);
+            }, 500);
         } catch (err: any) {
             const message = err?.data?.error || err?.data?.message || "Invalid username or password";
             setErrorMessage(message);

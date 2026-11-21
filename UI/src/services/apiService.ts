@@ -18,6 +18,8 @@ export interface AuthResponse {
   token: string;
   type: string;
   username: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   role: string;
   message?: string;
@@ -25,6 +27,8 @@ export interface AuthResponse {
 
 export interface UserProfile {
   username: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   role: string;
 }
@@ -59,6 +63,8 @@ export const apiService = createApi({
               'ccm_user',
               JSON.stringify({
                 username: data.username,
+                firstName: data.firstName || '',
+                lastName: data.lastName || '',
                 email: data.email,
                 role: data.role,
               })
@@ -86,6 +92,8 @@ export const apiService = createApi({
               'ccm_user',
               JSON.stringify({
                 username: data.username,
+                firstName: data.firstName || '',
+                lastName: data.lastName || '',
                 email: data.email,
                 role: data.role,
               })

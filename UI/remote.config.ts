@@ -13,13 +13,13 @@ export default createModuleFederationConfig({
         './Header': './src/common/Header/Header',
         './Footer': './src/common/Footer/Footer',
         './Layout': './src/common/Layout/Layout',
+        './ProtectedRoute': './src/common/ProtectedRoute/ProtectedRoute',
+        './AuthContext': './src/context/AuthContext',
     },
     shared:{
         'react': { singleton: true },
         'react-dom': { singleton: true },
         'react-router-dom': { singleton: true },
-        'react-redux': { singleton: true },
-        '@reduxjs/toolkit': { singleton: true },
     },
     dts: false,
 });

@@ -58,6 +58,8 @@ public class AuthService {
         return new AuthResponse(
                 jwt,
                 user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
                 user.getRole(),
                 "User registered successfully!"
@@ -78,6 +80,8 @@ public class AuthService {
         return new AuthResponse(
                 jwt,
                 user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
                 user.getRole(),
                 "Login successful!"
